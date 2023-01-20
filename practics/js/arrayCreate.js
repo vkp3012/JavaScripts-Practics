@@ -89,3 +89,19 @@ let productStocks = products.reduce((stocks,product)=>{
 console.log(productStocks);
 
 
+const nonprimumProductStocks = products.filter(product => product[1]<=300)
+    .map(prod => [prod[0].toUpperCase(),prod[1]])
+    .reduce((stocks,currentproduct)=>{
+        let stocksItems = stocks.find(stock => stock[0] == currentproduct[0])
+
+        if(!stocksItems)
+            stocks.push([currentproduct[0],1])
+        else
+            ++stocksItems[1]
+
+        return stocks
+    },[])
+
+console.log(nonprimumProductStocks);
+
+
