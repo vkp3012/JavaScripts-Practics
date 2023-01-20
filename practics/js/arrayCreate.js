@@ -44,7 +44,7 @@ let products = [
     ['Smiley T-Shirt',500],
     ['Smiley T-Shirt',250],
     ['Smiley T-Shirt',50],
-    ['Shinile Nail Pant',10].
+    ['Shinile Nail Pant',10],
     ["Esbeda Wallet",220]
 ]
 
@@ -61,5 +61,31 @@ const calculateDiscountPrice = discount => products.map(
 let discountprice = calculateDiscountPrice(10)
 console.log(products);
 console.log(discountprice);
+
+//find primum product price is greate 300
+const primumProduct = products.filter(product => product[1] >300);
+console.log(primumProduct);
+
+//find nonprimum product price is less than 300 and nonprimum product discount is 15%
+const nonprimumProducts = products.filter(product => product[1] <= 300);
+console.log(nonprimumProducts);
+
+const discountProduct = nonprimumProducts.map(product=>[product[0],product[1]-product[1]*15/100])
+console.log(discountProduct);
+
+
+//create a stock of each products type.
+let productStocks = products.reduce((stocks,product)=>{
+    let stockItem = stocks.find(stock => stock[0] == product[0]);
+
+    if(!stockItem)
+        stocks.push([product[0],1])
+    else
+        ++stockItem[1];
+
+    return stocks
+},[])
+
+console.log(productStocks);
 
 
