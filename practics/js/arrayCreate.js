@@ -105,3 +105,41 @@ const nonprimumProductStocks = products.filter(product => product[1]<=300)
 console.log(nonprimumProductStocks);
 
 
+
+//Create Object Using Initializer and Constructor
+
+function Engine(cylinders,size){
+    this.cylinders= cylinders;
+    this.size = size;
+}
+
+function Car(make,model,color,Cylinders,size){
+    this.make = make;
+    this.model = model;
+    this.color = color;
+    this.engine = new Engine(Cylinders,size)
+}
+
+let jackCar = new Car("Eagle","Talon TSI","Silver",4,2.2);
+let jillCar = new Car("Audi","300ZX","Black",6,2.2);
+
+console.log(jackCar);
+console.log(jillCar);
+
+//add some additional property
+jackCar.year = 2015
+
+console.log(jackCar);
+console.log(jillCar);
+
+let myCar = {
+    make : "Honda",
+    mode : "200ZY",
+    color : "White",
+    engine : {
+        Cylinders : 4,
+        Size: 4.2
+    }
+}
+
+console.log(myCar);
