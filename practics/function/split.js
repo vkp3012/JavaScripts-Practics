@@ -20,3 +20,22 @@ function splitify(str) {
 }
 
 splitify("Hello World,I-am code");
+
+//q-3
+// function urlSlug(title) {
+//     return title
+//             .toLowerCase()
+//             .trim()
+//             .split(/\s+/)
+//             .join("-")
+// }
+
+function urlSlug(title) {
+    return title
+      .split(" ")
+      .filter(substr => substr !== "")
+      .join("-")
+      .toLowerCase();
+}
+// Only change code above this line
+console.log(urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone"))
