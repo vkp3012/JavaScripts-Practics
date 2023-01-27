@@ -7,6 +7,7 @@ let modelPrioritycolor = colors[colors.length - 1];
 let AllPriorityColor = document.querySelectorAll(".priority-color");
 let lockElem = document.querySelector(".ticket-lock");
 let toolBoxColor = document.querySelectorAll(".color");
+let removeBtn = document.querySelector(".remove-btn")
 //listener for model priority color
 
 AllPriorityColor.forEach((colorElem, idx)=>{
@@ -63,6 +64,7 @@ function ticketCreate(ticketColor,ticketTask,ticketId){
 
     handleColor(ticketCount,id);
     handlelock(ticketCount,id);
+    handleRemove(ticketCount,id);
 }
 
 function handleColor(ticket,id){
@@ -91,21 +93,39 @@ let unlockClass = "fa-lock-open"
 function handlelock(ticket,id){
     let ticketlockElem = ticket.querySelector(".ticket-lock");
     let ticketLock = ticketlockElem.children[0];
+    console.log(ticketLock);
     let ticketTaskArea = ticket.querySelector(".task-area")
 
-    ticketLock.addEventListener("click",(e)=>{
+    ticketLock.addEventListener("click", (e)=>{
         let ticketIdx = getTicketIdx(id);
+        console.log(ticketLock);
         if(ticketLock.classList.contains(lockClass)){
             ticketLock.classList.remove(lockClass);
-            ticketLock.classList.add(lockClass);
+            ticketLock.classList.add(unlockClass);
+            console.log(ticketLock);
             ticketTaskArea.setAttribute("contenteditable","true");
         }else{
             ticketLock.classList.remove(unlockClass);
             ticketLock.classList.add(lockClass);
+            console.log(ticketLock);
             ticketTaskArea.setAttribute("contenteditable","false");
         }
 
         ticketsArr[ticketIdx].ticketTask = ticketTaskArea.innerText;
+    })
+}
+
+//remove btn 
+let removeFlag = false;
+removeBtn.addEventListener("click",(e)=>{
+    removeFlag = !removeFlag
+})
+
+function handleRemove(ticket,id){
+    // removeFlag = true;
+    ticket.addEventListener("click",(e)=>{
+        if(!removeFlag) return ;
+        ticket.remove();
     })
 }
 
@@ -118,7 +138,7 @@ function getTicketIdx(id){
 }
 
 function setModelToDefault(){
-    modelcount.display.style = "none"
+    // modelcount.display.style = "none";
     textareacont.value = "";
     modelPrioritycolor = colors[colors.length - 1];
     AllPriorityColor.forEach((prioritycolorElem,idx)=>{
@@ -127,28 +147,3 @@ function setModelToDefault(){
 
     AllPriorityColor[AllPriorityColor.length-1].classList.add("border");
 }
-
-
-// function handlelock(ticket,id){
-    
-//     let ticketlockElem = ticket.querySelector(".ticket-lock");
-//     let ticketLock = ticketlockElem.children[0];
-//     let ticketTaskArea = ticket.querySelector(".task-area")
-
-//     ticketLock.addEventListener("click", (e) => {
-//         let ticketIdx = getTicketIdx(id);
-//         if(ticketLock.classList.contains(lockClass)){
-//             ticketLock.classList.remove(lockClass);
-//             ticketLock.classList.add(unLockClass);
-//             ticketTaskArea.setAttribute("contenteditable","true");
-//         }else{
-//             ticketLock.classList.remove(unLockClass); 
-//             ticketLock.classList.add(lockClass);
-//             ticketTaskArea.setAttribute("contenteditable","false");
-//         }
-
-//         //modify data in local storage (ticket task)
-//         ticketsArr[ticketIdx].ticketTask = ticketTaskArea.innerText;
-//         // localStorage.setItem("jira-ticket",JSON.stringify(ticketsArr));
-//     })
-// }
