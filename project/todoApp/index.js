@@ -8,8 +8,8 @@ let AllPriorityColor = document.querySelectorAll(".priority-color");
 let lockElem = document.querySelector(".ticket-lock");
 let toolBoxColor = document.querySelectorAll(".color");
 let removeBtn = document.querySelector(".remove-btn")
-//listener for model priority color
 
+//listener for model priority color
 AllPriorityColor.forEach((colorElem, idx)=>{
     colorElem.addEventListener("click",(e)=>{
         AllPriorityColor.forEach((prioritycolorElem,idx)=>{
@@ -21,8 +21,40 @@ AllPriorityColor.forEach((colorElem, idx)=>{
     }
 )
 
-//add-btn-event
+let ticketsArr = [];
 
+//filter ticket
+for(let i = 0;i<toolBoxColor.length;i++){
+    toolBoxColor[i].addEventListener("click",(e)=>{
+        let currentToolBoxColor = toolBoxColor[i].classList[0];
+
+        let filterTickets = ticketsArr.filter((Obj,idx) => {
+            return currentToolBoxColor === Obj.ticketColor
+        })
+
+        let allTicketCount = document.querySelector(".ticket-count");
+        for(let i = 0;i<allTicketCount.length;i++){
+            allTicketCount[i].remove();
+        }
+
+        filterTickets.forEach((obj,idx)=>{
+            ticketCreate(obj.ticketColor,obj.ticketTask,obj.ticketId)
+        })
+    })
+
+    toolBoxColor[i].addEventListener("dblclick",(e)=>{
+        let allTicketCont = document.querySelectorAll(".ticket-count");
+        for(let i = 0;i<allTicketCont.length;i++){
+            allTicketCont[i].gitremove();
+        }
+
+        ticketsArr.forEach((ticketsObj,idx)=>{
+            ticketCreate(ticketsObj.ticketColor,ticketsObj.ticketTask,ticketsObj.ticketID)
+        })
+    })
+}
+
+//add-btn-event
 let addFlag = false;
 addbtn.addEventListener("click",(e)=>{
     addFlag = !addFlag;
@@ -38,16 +70,16 @@ modelcount.addEventListener("keydown",(e)=>{
     if(key === "Shift"){
         ticketCreate(modelPrioritycolor,textareacont.value);
         modelcount.style.display = "none";
-        // addFlag = false;
         setModelToDefault();
     }
 })
 
 //create a ticket
-let ticketsArr = [];
+
 function ticketCreate(ticketColor,ticketTask,ticketId){
     let id = ticketId || shortid();
     let ticketCount = document.createElement("div");
+    ticketCount.setAttribute("class","ticket-count")
     ticketCount.innerHTML = `
         <div class = "ticket-color ${ticketColor}"></div>
         <div class = "ticket-id">Ticket : - ${id}</div>
@@ -122,7 +154,6 @@ removeBtn.addEventListener("click",(e)=>{
 })
 
 function handleRemove(ticket,id){
-    // removeFlag = true;
     ticket.addEventListener("click",(e)=>{
         if(!removeFlag) return ;
         ticket.remove();
